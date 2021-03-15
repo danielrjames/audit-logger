@@ -1,0 +1,48 @@
+﻿@model AuditLogListVM
+@{
+    ViewData["Title"] = "Logs";
+}
+<div class="row">
+    <div class="col-sm">
+        <div class="text-center">
+            <h2>Audit Logs</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Table</th>
+                    <th scope="col">OldValue</th>
+                    <th scope="col">NewValue</th>
+                </tr>
+            </thead>
+            @if (Model.Logs.Count > 0)
+            {
+                foreach (var log in Model.Logs)
+                {
+                    <tr>
+                        <td>@log.Date</td>
+                        <td>@log.User</td>
+                        <td>@log.Action</td>
+                        <td>@log.Table</td>
+                        <td>@log.OldValue</td>
+                        <td>@log.NewValue</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No available logs.</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

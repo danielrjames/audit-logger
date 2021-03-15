@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = SignInManager.IsSignedIn(User) ? "Dashboard" : "Home Page";
+}
+
+<div class="text-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1 class="display-4">You are signed In!</h1>
+        <p>Create, edit, and delete products. Then check the logs!</p>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+        <p>This is an audit logger for Kevin.</p>
+    }
+</div>

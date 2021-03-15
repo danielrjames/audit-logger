@@ -1,0 +1,31 @@
+﻿@model ProductDetailsVM
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="row">
+    <div class="col-sm">
+        <h2>Product Details</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <div>
+                    @Model.Color
+                </div>
+                <div>
+                    @Model.Price
+                </div>
+                <form asp-controller="products" asp-action="delete" method="post">
+                    <input type="hidden" id="productId" asp-for="Id" />
+                    <input type="hidden" id="productSlug" asp-for="Slug" />
+                    <a class="btn btn-info" asp-controller="product" asp-action="edit" asp-route-slug="@Model.Slug">Edit</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

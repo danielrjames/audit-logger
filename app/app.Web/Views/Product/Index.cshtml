@@ -1,0 +1,54 @@
+﻿@model ProductListVM
+
+@{
+    ViewData["Title"] = "Products";
+}
+<div class="row">
+    <div class="col-sm">
+        <div class="text-center">
+            <h2>Products Page</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right" style="margin-bottom:20px">
+            <a class="btn btn-primary" asp-controller="product" asp-action="create">Create Product</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            @if (Model.Products.Count > 0)
+            {
+                foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Color</td>
+                        <td>@product.Price</td>
+                        <td>
+                            <a class="btn btn-secondary" asp-controller="product" asp-action="details" asp-route-slug="@product.Slug">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No available products. Please create one.</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
