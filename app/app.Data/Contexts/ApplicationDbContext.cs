@@ -105,6 +105,18 @@ namespace app.Data.Contexts
                     continue;
                 }
 
+                if (property.OriginalValue?.ToString() == property.CurrentValue?.ToString())
+                {
+                    continue;
+                }
+
+                string[] skippedIdentityFields = { "concurrencystamp", "securitystamp" };
+
+                if (skippedIdentityFields.Contains(property.Metadata.Name.ToLower()))
+                {
+                    continue;
+                }
+
                 var value = new string[]
                 {
                     property.Metadata.Name,
