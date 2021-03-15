@@ -1,6 +1,6 @@
 ﻿@model AuditLogListVM
 @{
-    ViewData["Title"] = "Logs";
+    ViewData["Title"] = "Audit Logs";
 }
 <div class="row">
     <div class="col-sm">
@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-sm">
-        <table class="table table-sm table-responsive">
+        <table class="table table-sm">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Date</th>
@@ -32,8 +32,8 @@
                         <td>@log.User</td>
                         <td>@log.Action</td>
                         <td>@log.Table</td>
-                        <td>@log.OldValue</td>
-                        <td>@log.NewValue</td>
+                        <td style="max-width:200px !important;"><pre>@log.OldValue</pre></td>
+                        <td style="max-width:200px !important;"><pre>@log.NewValue</pre></td>
                     </tr>
                 }
             }
