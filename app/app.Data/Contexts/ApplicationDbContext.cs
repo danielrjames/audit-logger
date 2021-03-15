@@ -102,7 +102,7 @@ namespace app.Data.Contexts
             {
                 if (entry.State == EntityState.Modified)
                 {
-                    var valid = ModifiedChecks(entry, property);
+                    var valid = ModifiedChecks(property);
 
                     if (!valid)
                     {
@@ -127,9 +127,9 @@ namespace app.Data.Contexts
         /// <summary>
         /// a few checks for modified entries, primairly for identity
         /// </summary>
-        private static bool ModifiedChecks(EntityEntry entry, PropertyEntry property)
+        private static bool ModifiedChecks(PropertyEntry property)
         {
-            if (entry.State == EntityState.Modified && !property.IsModified) // if property isn't modified, skip
+            if (!property.IsModified) // if property isn't modified, skip
             {
                 return false;
             }
@@ -141,7 +141,7 @@ namespace app.Data.Contexts
 
             string[] skippedIdentityFields = { "concurrencystamp", "securitystamp" };
 
-            if (skippedIdentityFields.Contains(property.Metadata.Name.ToLower())) // skkipping concurrency stamp and security stamp in identity (will always be different)
+            if (skippedIdentityFields.Contains(property.Metadata.Name.ToLower())) // skipping concurrency stamp and security stamp in identity (will always be different)
             {
                 return false;
             }
