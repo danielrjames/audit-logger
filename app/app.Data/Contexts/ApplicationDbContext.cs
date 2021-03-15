@@ -100,21 +100,14 @@ namespace app.Data.Contexts
 
             foreach (var property in entry.Properties)
             {
-                if (entry.State == EntityState.Modified && !property.IsModified) // if property isn't modified, skip
+                if (entry.State == EntityState.Modified)
                 {
-                    continue;
-                }
+                    var valid = ModifiedChecks(entry, property);
 
-                if (property.OriginalValue?.ToString() == property.CurrentValue?.ToString())
-                {
-                    continue;
-                }
-
-                string[] skippedIdentityFields = { "concurrencystamp", "securitystamp" };
-
-                if (skippedIdentityFields.Contains(property.Metadata.Name.ToLower()))
-                {
-                    continue;
+                    if (!valid)
+                    {
+                        continue;
+                    }
                 }
 
                 var value = new string[]
@@ -129,6 +122,31 @@ namespace app.Data.Contexts
             var serializedList = JsonConvert.SerializeObject(valueList); //serialize list
 
             return serializedList;
+        }
+
+        /// <summary>
+        /// a few checks for modified entries, primairly for identity
+        /// </summary>
+        private static bool ModifiedChecks(EntityEntry entry, PropertyEntry property)
+        {
+            if (entry.State == EntityState.Modified && !property.IsModified) // if property isn't modified, skip
+            {
+                return false;
+            }
+
+            if (property.OriginalValue?.ToString() == property.CurrentValue?.ToString()) // if old and new are the same, skip (mainly for indentity)
+            {
+                return false;
+            }
+
+            string[] skippedIdentityFields = { "concurrencystamp", "securitystamp" };
+
+            if (skippedIdentityFields.Contains(property.Metadata.Name.ToLower())) // skkipping concurrency stamp and security stamp in identity (will always be different)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
