@@ -1,4 +1,4 @@
-﻿namespace app.Domain.Entities.Conts
+﻿namespace app.Domain.Entities.Consts
 {
     public class TableName
     {

@@ -1,5 +1,5 @@
 ﻿using app.Domain.Entities.Audit;
-using app.Domain.Entities.Conts;
+using app.Domain.Entities.Consts;
 using app.Domain.Entities.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
