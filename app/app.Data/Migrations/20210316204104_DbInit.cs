@@ -53,6 +53,7 @@ namespace app.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RecordKey = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "text", nullable: true),
                     Action = table.Column<string>(type: "text", nullable: true),
                     Table = table.Column<string>(type: "text", nullable: true),

@@ -1,4 +1,5 @@
 ﻿using app.Domain.Entities.Audit;
+using app.Domain.Entities.Conts;
 using app.Domain.Entities.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -59,28 +60,31 @@ namespace app.Data.Contexts
         /// <param name="entry">entry item to be logged</param>
         private void SaveLog(EntityEntry entry)
         {
+            var pkName = entry.Metadata.FindPrimaryKey().Properties.Select(x => x.Name).Single().ToString(); //finding pk column name
+
             var auditEntry = new AuditLog
             {
                 UserName = _httpContextAccessor?.HttpContext.User.FindFirstValue(ClaimTypes.Name), // grabbing user from httpContextAccessor middleware
                 Table = entry.Entity.GetType().Name,
+                RecordKey = entry.State != EntityState.Added ? entry.Properties.FirstOrDefault(p => p.Metadata.Name == pkName).CurrentValue?.ToString() : string.Empty, // getting pk value using pkName on modified and deleted actions (created does not have id)
                 Date = DateTime.Now
             };
 
             if (entry.State == EntityState.Added)
             {
-                auditEntry.Action = "Created";
-                auditEntry.OldValue = "N/A";
+                auditEntry.Action = AuditAction.Created;
+                auditEntry.OldValue = string.Empty;
                 auditEntry.NewValue = GetValues(entry);
             }
             else if (entry.State == EntityState.Modified)
             {
-                auditEntry.Action = "Modified";
+                auditEntry.Action = AuditAction.Modified;
                 auditEntry.OldValue = GetValues(entry, true);
                 auditEntry.NewValue = GetValues(entry);
             }
             else // deleted
             {
-                auditEntry.Action = "Deleted";
+                auditEntry.Action = AuditAction.Deleted;
                 auditEntry.OldValue = GetValues(entry, true);
                 auditEntry.NewValue = "N/A";
             }

@@ -236,6 +236,9 @@ namespace app.Data.Migrations
                     b.Property<string>("OldValue")
                         .HasColumnType("text");
 
+                    b.Property<string>("RecordKey")
+                        .HasColumnType("text");
+
                     b.Property<string>("Table")
                         .HasColumnType("text");
 

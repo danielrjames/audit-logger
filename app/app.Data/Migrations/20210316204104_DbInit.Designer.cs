@@ -10,7 +10,7 @@ using app.Data.Contexts;
 namespace app.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210315014103_DbInit")]
+    [Migration("20210316204104_DbInit")]
     partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -236,6 +236,9 @@ namespace app.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("OldValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RecordKey")
                         .HasColumnType("text");
 
                     b.Property<string>("Table")
